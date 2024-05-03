@@ -7,11 +7,6 @@ from django.urls import reverse_lazy
 
 # Create your views here.
 
-def index(request):
-    return render(request, 'index.html')
-
-# !!!!!!
-# Перенести логику в модель?
 class NoteListView(ListView):
     model = Note
     context_object_name = 'note_list'
@@ -19,26 +14,11 @@ class NoteListView(ListView):
 
     def get_queryset(self):
         queryset = Note.objects.all()
+        filters = ["-words_count", "-unique_words_count", "-category", "-is_archived", "is_archived"]
 
-        filter_by_word_count = self.request.GET.get('filter_by_word_count')
-        if  filter_by_word_count:
-            queryset = queryset.order_by("-words_count")
-
-        filter_by_unique_word_count = self.request.GET.get('filter_by_unique_word_count')
-        if filter_by_unique_word_count:
-            queryset = queryset.order_by("-unique_words_count")
-
-        filter_by_category = self.request.GET.get('filter_by_category')
-        if filter_by_category:
-            queryset = queryset.order_by("-category")
-        
-        filter_by_archived = self.request.GET.get("filter_by_archived")
-        if filter_by_archived:
-            queryset = queryset.order_by("-is_archived")
-
-        filter_by_active = self.request.GET.get("filter_by_active")
-        if filter_by_active:
-            queryset = queryset.order_by("is_archived")
+        query_parameter = self.request.GET.get('filter_by')
+        if  query_parameter in filters:
+            queryset = queryset.order_by(str(query_parameter))
 
         return queryset
     
@@ -58,15 +38,10 @@ class NoteUpdateView(UpdateView):
     template_name= "note_form.html"
     success_url=reverse_lazy("note_list")
 
-# class NoteDeleteView(DeleteView):
-#     model = Note
-#     template_name= "note_delete.html"
-#     success_url=reverse_lazy("note_list")
-
-def delete_note(request, pk):
-    note = Note.objects.get(pk=pk)
-    note.delete()
-    return HttpResponse()
+class NoteDeleteView(DeleteView):
+    model = Note
+    template_name= "note_delete.html"
+    success_url=reverse_lazy("note_list")
 
     
 def change_archive_status(request, pk):
