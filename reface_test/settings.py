@@ -51,6 +51,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "notes_app.middleware.ExceptionHandling500ErrorMiddleware",
+    "notes_app.middleware.ExceptionHandling404ErrorMiddleware",
+    "notes_app.middleware.ExceptionHandling403ErrorMiddleware",
 ]
 
 ROOT_URLCONF = "reface_test.urls"
@@ -132,3 +135,5 @@ COMPRESS_ROOT = BASE_DIR / 'static/'
 COMPRESS_ENABLED = True
 
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+
+LOGIN_URL="/login/"

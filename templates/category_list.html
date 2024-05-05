@@ -1,30 +1,43 @@
 {% extends "_base.html" %}
 
 {% block content %}
+<div class="ml-20">
 
-  <h1 class="mb-6 text-3xl text-green-800">Your Categories</h1>
+  <h1 class="mb-10 text-3xl">Your categories</h1>
 
-  <a href="{% url 'category_create' %}" class="inline-flex font-medium items-center text-blue-600 hover:underline">
-    Create Category
-    <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
-    </svg>
-  </a>
+  <div class="flex justify-start items-center gap-4 mb-8">
+    
+    <div>
+      <a href="{% url 'category_create' %}" class="text-white bg-green-400 hover:bg-green-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create new category</a>
+    </div>
+    <div>
+      <a href="{% url 'note_list' %}" class="inline-flex font-medium items-center text-blue-600 hover:underline">
+        Show all notes
+        <svg class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"/>
+        </svg>
+      </a>
+    </div>
+</div>
 
 
   {% if categories_list %}
-    <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      {% for category in categories_list %}
-      <li>
-        <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-          <div style="background-color:{{category.color}};" class = "text-xs font-medium me-2 px-2.5 py-0.5 rounded "></div>
-          <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ category.name }}</h5>
-      </div>
-      
-      </li>
-      {% endfor %}
-    </ul>
+  <ul class="grid grid-cols-2 md:grid-cols-3 gap-10">
+    {% for category in categories_list %}
+    <li>
+      <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div style="background-color:{{category.color}};" class = "text-xs font-medium me-2 px-2.5 py-1.5 rounded h-6"></div>
+        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{category.name}}</h5>
+          <div class="flex justify-end items-center gap-1">
+            <a href="{% url 'category_update' category.pk %}" class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 py-1.5 me-2 mb-2 dark:focus:ring-yellow-900">Edit </a>
+            <a href="{% url 'category_delete' category.pk %}" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-1.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</a>
+          </div>
+    </div>
+    </li>
+    {% endfor %}
+  </ul>
   {% else %}
     <p class="mb-6 text-3xl text-green-800">There are no categories.</p>
   {% endif %}
+</div>
 {% endblock content %}

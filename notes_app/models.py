@@ -1,16 +1,21 @@
 from django.db import models
 from colorfield.fields import ColorField
+from django.contrib.auth.models import User
+
 # Create your models here.
 
 class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=20, unique=True)
-    color = ColorField()
-
+    color = ColorField(unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def __str__(self):
         return self.name
+    
     class Meta:
         verbose_name_plural = "Categories"
+        ordering = ["name"]
 
 class Note(models.Model):
     id = models.AutoField(primary_key=True)
@@ -19,7 +24,8 @@ class Note(models.Model):
     words_count = models.IntegerField(editable=False)
     unique_words_count = models.IntegerField(editable=False)
     is_archived = models.BooleanField(default=False)
-    category= models.ForeignKey(Category, on_delete=models.DO_NOTHING, null=True, blank=True)
+    category= models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

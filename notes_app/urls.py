@@ -1,13 +1,18 @@
 from django.urls import path
-from .views import NoteListView, NoteDetailView, NoteCreateView, NoteUpdateView, change_archive_status, CategoryCreateView, NoteDeleteView, CategoryListView
-
+from . import views
 urlpatterns = [
-    path('categories/', CategoryListView.as_view(), name='categories_list'),
-    path('categories/create/', CategoryCreateView.as_view(), name="category_create"),
-    path("notes/", NoteListView.as_view(), name="note_list"),
-    path("notes/<int:pk>/", NoteDetailView.as_view(), name="note_detail"),
-    path("notes/create/", NoteCreateView.as_view(), name= "note_create" ), 
-    path("notes/<int:pk>/update", NoteUpdateView.as_view(), name="note_update"),
-    path("notes/<int:pk>/delete", NoteDeleteView.as_view(), name="note_delete"),
-    path("notes/<int:pk>/note_status", change_archive_status, name="change_archive_status"),
+    path('login/', views.UserLogin.as_view(), name='login'),
+    path('signup/', views.UserSignup.as_view(), name='signup'),
+
+    path('categories/', views.CategoryListView.as_view(), name='categories_list'),
+    path('categories/create/', views.CategoryCreateView.as_view(), name="category_create"),
+    path("category/<int:pk>/update", views.CategoryUpdateView.as_view(), name="category_update"),
+    path("category/<int:pk>/delete", views.CategoryDeleteView.as_view(), name="category_delete"),
+
+    path("notes/", views.NoteListView.as_view(), name="note_list"),
+    # path("notes/<int:pk>/", views.NoteDetailView.as_view(), name="note_detail"),
+    path("notes/create/", views.NoteCreateView.as_view(), name= "note_create" ), 
+    path("notes/<int:pk>/update", views.NoteUpdateView.as_view(), name="note_update"),
+    path("notes/<int:pk>/delete", views.NoteDeleteView.as_view(), name="note_delete"),
+    path("notes/<int:pk>/note_status", views.change_archive_status, name="change_archive_status"),
 ]

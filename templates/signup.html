@@ -1,0 +1,60 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="flex justify-center">
+    <div>
+        <form method="POST" action="" class="max-w-md p-4 bg-white rounded shadow-md">
+            {% csrf_token %}
+            <h3 class="text-lg font-bold mb-4">REGISTER</h3>
+            <div class="mb-4">
+                <h5>{{form.username.label}}</h5>
+                {{form.username}}
+                {% if form.username.errors %}
+                    <ul class="text-red-600">
+                        {% for error in form.username.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <h5>{{form.email.label}}</h5>
+                {{form.email}}
+                {% if form.email.errors %}
+                    <ul class="text-red-600">
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <h5>{{form.password1.label}}</h5>
+                {{form.password1}}
+                {% if form.password1.errors %}
+                    <ul class="text-red-600">
+                        {% for error in form.password1.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="mb-4">
+                <h5>{{form.password2.label}}</h5>
+                {{form.password2}}
+                {% if form.password2.errors %}
+                    <ul class="text-red-600">
+                        {% for error in form.password2.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            <div class="flex justify-center">
+                <button type="submit" class="bg-green-400 hover:bg-green-800 text-white font-medium py-2 px-4 rounded">SignUp</button>
+            </div>
+            <p class="mb-4">Already registered? <a href="{% url 'login' %}">Log In</a></p>
+        </form>
+    </div>
+</div>
+{% endblock content %}
