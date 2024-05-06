@@ -4,9 +4,9 @@ from .forms import CategoryForm, NoteForm, CustomUserForm
 from .mixins import PermissionMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-
+from django.contrib import messages
 from django.views.generic.edit import FormView
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.views import LoginView
 
@@ -34,10 +34,18 @@ class UserLogin(LoginView):
 	fields = '__all__'
 	redirect_authenticated_user = True
 
+	def form_invalid(self, form):
+		messages.error(self.request,'Invalid username or password')
+		return self.render_to_response(self.get_context_data(form=form))
+     
 	def get_success_url(self):
 		return reverse_lazy('note_list')
+     
 
 
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 class NoteListView(LoginRequiredMixin, ListView):
     model = Note
@@ -46,7 +54,7 @@ class NoteListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = Note.objects.filter(user=self.request.user)
-        filters = ["-words_count", "-unique_words_count", "-category", "-is_archived", "is_archived"]
+        filters = ["-words_count", "-unique_words_count", "-category", "created_at", "-created_at"]
 
         query_parameter = self.request.GET.get('filter_by')
         if  query_parameter in filters:
@@ -54,16 +62,18 @@ class NoteListView(LoginRequiredMixin, ListView):
 
         return queryset
     
-# class NoteDetailView(LoginRequiredMixin, PermissionMixin, DetailView):
-#     model = Note 
-#     template_name="note_detail.html"
 
 class NoteCreateView(LoginRequiredMixin,CreateView):
     model = Note
     form_class = NoteForm
     template_name= "note_form.html"
     success_url=reverse_lazy("note_list")
-
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
@@ -73,7 +83,11 @@ class NoteUpdateView(LoginRequiredMixin, PermissionMixin, UpdateView):
     form_class = NoteForm
     template_name= "note_form.html"
     success_url=reverse_lazy("note_list")
-
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
     
 class NoteDeleteView(LoginRequiredMixin, PermissionMixin, DeleteView):
     model = Note

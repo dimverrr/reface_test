@@ -48,6 +48,3 @@ class Note(models.Model):
         total_words = self.description.lower().split()
         return total_words
     
-    # def count_unique_words(self):
-    #     total_unique_words = set(self.description.lower().split())
-    #     return len(total_unique_words)
