@@ -6,6 +6,7 @@
 <div class=" flex justify-center ">
     <div class="max-w-md mx-auto p-4 bg-white rounded shadow-md">
       <form method="POST" action="">
+        {% csrf_token %}
         <h3 class="text-lg font-bold mb-4">Create new category</h3>
         {% for field in form %}
             <div class="mb-4">
