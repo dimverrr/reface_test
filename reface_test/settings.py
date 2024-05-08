@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "notes_app.apps.NotesAppConfig",
-    "compressor",
+    # "compressor",
     "colorfield",
 ]
 
@@ -135,17 +135,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-COMPRESS_ROOT = BASE_DIR / "static/"
+# COMPRESS_ROOT = BASE_DIR / "static2/"
 
-COMPRESS_ENABLED = True
+# COMPRESS_ENABLED = True
 
-STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)
+# STATICFILES_FINDERS = ("compressor.finders.CompressorFinder",)
 
 LOGIN_URL = "/login/"
