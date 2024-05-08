@@ -50,7 +50,7 @@
   {% if note_list %}
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-10">
       {% for note in note_list %}
-      <li>
+      <li class="mb-2">
         {% if note.is_archived %}
         <div class="max-w-sm p-6 bg-gray-200 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         {% else %}
