@@ -66,6 +66,8 @@ class NoteListView(LoginRequiredMixin, ListView):
             "-category",
             "created_at",
             "-created_at",
+            "is_archived",
+            "-is_archived"
         ]
 
         query_parameter = self.request.GET.get("filter_by")

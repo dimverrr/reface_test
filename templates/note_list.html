@@ -32,10 +32,16 @@
               <a href="/notes/?filter_by=-category" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Filter by category</a>
             </li>
             <li>
-              <a href="/notes/?filter_by=created_at" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Filter by archived</a>
+              <a href="/notes/?filter_by=created_at" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Filter by oldest</a>
             </li>
             <li>
               <a href="/notes/?filter_by=-created_at" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Filter by newest</a>
+            </li>
+            <li>
+              <a href="/notes/?filter_by=-is_archived" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Filter by archived</a>
+            </li>
+            <li>
+              <a href="/notes/?filter_by=is_archived" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Filter by active</a>
             </li>
           </ul>
       </div>
@@ -53,6 +59,9 @@
           <div style="background-color:{{note.category.color}};" class = "text-xs font-medium me-2 px-2.5 py-1.5 rounded h-6"></div>
           <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">{{note.title}}</h5>
           <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">{{note.description}}</p>
+          <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Total words - {{note.words_count}}</p>
+          <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Unique words - {{note.unique_words_count}}</p>
+          <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Created at - {{note.created_at}}</p>
           {% if note.category %}
           <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Category - {{note.category.title}}</p>
           {% endif %}
