@@ -8,13 +8,14 @@ from .models import Category, Note
 from .forms import CategoryForm, NoteForm, CustomUserForm
 from .mixins import PermissionMixin
 from django.shortcuts import get_object_or_404, redirect
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 class UserSignup(FormView):
@@ -113,6 +114,8 @@ class NoteDeleteView(LoginRequiredMixin, PermissionMixin, DeleteView):
 
 def change_archive_status(request, pk):
     note = get_object_or_404(Note, pk=pk)
+    if note.user!= request.user:
+        return HttpResponseForbidden()
     note.is_archived = not note.is_archived
     note.save()
     return redirect("/notes")
