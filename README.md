@@ -49,6 +49,7 @@ Login page - https://127.0.0.1:8000/login
   In addition to tasks that were described, the next features were added:
   1. User system (login/registration).
   2. Next note fields (word count, unique word count, created at) were added for easier understanding of note filters.
+  3. UI was created with help of [Flowbite](https://flowbite.com/) and [TailwindCSS](https://tailwindcss.com/)
   
 
 
