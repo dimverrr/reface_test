@@ -1,3 +1,24 @@
+# App links 
+
+The app was deployed on Digital Ocean.
+
+There are two users, that were loaded from fixtures:
+
+## Superuser
+
+Login: admin
+
+Password: 12345
+
+## Regular user
+
+Login: test
+
+Password: test12345
+
+Login page - https://note-app-xdz2h.ondigitalocean.app/login/ 
+
+Admin panel - https://note-app-xdz2h.ondigitalocean.app/admin/
 # Launch the project on your local machine
    1. Download and launch [Docker](https://www.docker.com/).
    2. Clone repository
